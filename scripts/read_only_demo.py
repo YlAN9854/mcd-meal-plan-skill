@@ -1,4 +1,4 @@
-"""Verify real store/menu/coupon-query/price access without an LLM or order creation."""
+"""检查真实门店、菜单、优惠和计价接口；无需调用模型或创建订单。"""
 import argparse
 import hashlib
 import asyncio
@@ -48,7 +48,7 @@ async def demo(args):
         for _, code, meal in sorted(choices, key=lambda v:(v[0],v[1]))[:5]:
             detail = await request(session, 'query-meal-detail', {**channel, 'code': code})
             product = detail.get('data') or {}
-            # This transport smoke test chooses only a simple unmodified single product.
+            # 接口检查选用无需套餐选配或特调的单品。
             if product.get('rounds') or (product.get('modification') or {}).get('items'):
                 continue
             quoted = await request(session, 'calculate-price',

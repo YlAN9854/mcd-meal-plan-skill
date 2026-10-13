@@ -1,66 +1,69 @@
-# 麦当劳点餐决策助手
+# 🍔 麦当劳点餐决策助手
 
-参赛准备状态：项目与真实接口验证已就绪，报名 Issue 待参赛者确认官方规则和参赛声明后提交。
+**少纠结一会儿，早点开饭。**
 
-把“预算、人数、必选项、口味偏好和优惠券”整理成有真实报价依据的用餐方案。通过麦当劳官方 MCP 查询门店、菜单、餐品详情和门店适用优惠，再按完整购物车计价，说明方案是否满足你的要求。
+“想吃汉堡，还想来杯咖啡；两个人一起，预算可得看着点。”
 
-适合有预算约束的个人或多人点餐、到店自取和得来速场景。你可以直接描述需求，例如：
+把这些小要求交给这个 Skill。它会通过麦当劳官方 MCP 查门店、看菜单、找适用的优惠，再把整单价格算清楚，帮你整理一份用餐方案。一个人吃得合心意，几个人点餐也能把各自的要求说清楚。
 
-> 上海人民广场附近，到店自取，两个人，预算 60 元，每人一份主食和一杯饮料。先展示门店让我选择，再结合该门店可用优惠给出方案；有无法确认的条件请告诉我。
+你负责说想吃什么，它负责记清条件、查好价格。🍟
 
-Skill 会区分硬性要求与偏好，报告可行方案、待澄清信息或有证据的无解原因。探索不充分时会明确证据不足，不把“暂时没找到”说成“没有方案”。最终提供商品、数量、整单报价、约束检查和调用依据，以方案输出结束。
+## 先从这一句开始
 
-## 安装和使用
+> 上海人民广场附近，到店自取，两个人，预算 60 元，每人一份主食和一杯饮料。先给我看看门店，再结合能用的优惠搭配一下。
 
-需要 Python 3.11+；使用 Skill 还需要一个支持 Markdown Skill 与 Streamable HTTP MCP 的 AI 客户端。模型由你在客户端自行选择。
+也可以说得更具体：
 
-```bash
-git clone https://github.com/YlAN9854/mcd-meal-plan-skill.git
-cd mcd-meal-plan-skill
-python3 -m venv .venv
-. .venv/bin/activate
-python -m pip install -r requirements.txt
-```
+> 两个人到店自取，一位必须有咖啡，另一位更想喝可乐，总共 60 元。先帮我看看怎么搭。
+
+> 我想走得来速。优先选我喜欢的汉堡，如果售罄，可以换同类商品。帮我确认门店和价格。
+
+上面的内容是提问示例，餐品、优惠和价格会按你选的门店实时查询。
+
+## 这位点餐小帮手会做什么
+
+| 点餐时的小纠结 | 它会怎么帮忙 |
+| --- | --- |
+| “这顿最多花这么多。” | 按预算搭配，再查整单报价 |
+| “我的咖啡一定要有。” | 把必选项记清楚，搭配时保留 |
+| “更想吃这个，卖完了可以换。” | 分清偏好和替代许可，结合查询结果处理 |
+| “我的券在这家能用吗？” | 查询当前门店和取餐方式适用的优惠 |
+| “先告诉我到底多少钱。” | 核对商品、数量和优惠对应的整单价格 |
+
+最后你会拿到门店、取餐方式、商品清单、整单金额，以及每项要求的处理情况。缺少信息时，它会先问清楚；暂时没找到合适搭配时，会说明查过什么、还缺什么。
+
+方案准备好后，你可以按自己的节奏去官方渠道点餐。这个 Skill 的工作到方案输出为止。
+
+## 把它接到你的 AI 助手里
+
+准备一个支持 Markdown Skill 和 Streamable HTTP MCP 的 AI 客户端，然后：
 
 1. 在 [麦当劳 MCP 开放平台](https://open.mcd.cn/mcp)申请自己的 Token。
-2. 在终端设置 `MCD_MCP_URL=https://mcp.mcd.cn` 和 `MCD_MCP_TOKEN`。不要把 Token 写进仓库、聊天示例或 issue。
-3. 将 [mcp-config.example.json](mcp-config.example.json)作为客户端连接配置的模板。模板变量必须由客户端展开；若客户端不支持，可运行 `python scripts/render_mcp_config.py`，将生成的本机 `.local/mcp.json` 导入客户端。该文件含凭据、权限为0600且已被 Git 忽略。
-4. 按客户端的 Skill 安装方式导入完整的 [skills/mcd-meal-plan-output](skills/mcd-meal-plan-output/) 目录，保留 `references/`。在具有文件读取能力的编码 Agent 中，也可明确要求读取该目录的 `SKILL.md` 后执行点餐请求。
-5. 连接 `mcd-mcp`，提出城市/位置、取餐方式、人数、预算和偏好。按提示选择真实门店；需要机器可读结果时，要求同时输出 `plan.json`，格式见 [输出说明](skills/mcd-meal-plan-output/references/output.md)。
+2. 按 [接入步骤](docs/GETTING_STARTED.md)连接官方 MCP。
+3. 导入完整的 [mcd-meal-plan-output](skills/mcd-meal-plan-output/) 文件夹，保留里面的 `references/`。
+4. 告诉助手你的位置、取餐方式、人数、预算和口味，开始安排这一餐。
 
-本机保存 Token 可用不会回显输入的 Bash 命令；命令历史只包含变量名：
+想先用命令行试试？接入文档也准备好了安装和查询命令。Python 脚本需要 **Python 3.11+**。
 
-```bash
-export MCD_MCP_URL=https://mcp.mcd.cn
-read -rs -p 'MCD MCP Token: ' MCD_MCP_TOKEN; printf '\n'
-export MCD_MCP_TOKEN
-```
+## 菜单和价格，已经认真查过了
 
-## 先验证真实接口
+2026-10-13，我们用真实麦当劳 MCP 跑通了这条流程：
 
-以下命令直接访问官方 MCP，不需要调用大模型，也不创建订单：
+**查门店 → 看菜单 → 查门店优惠 → 看商品详情 → 核对整单报价**
 
-```bash
-python scripts/mcd_mcp.py tools
-python scripts/mcd_mcp.py call query-nearby-stores --arguments '{"city":"上海","keyword":"人民广场","searchType":2,"beType":1}'
-python scripts/read_only_demo.py --city 上海 --keyword 人民广场
-```
+五次业务调用均成功，取得了有效报价；另外通过了 7 项本地测试。[查看接口验证记录](docs/live-verification.json)。这次检查覆盖实际工具调用，完整自然语言点餐的模型表现还需单独测量。
 
-CLI 只允许六个查询/计价工具；价格与库存会随门店和时间变化。演示从查询结果中选择营业门店及一个无需选配的商品，核验真实整单计价链路；它不运行配餐搜索。标准客户端直接连接官方 MCP 时可能看到更多工具，Skill 的任务范围仍止于方案，不授权下单、领券或账户修改。
+这个 Skill 也经历过固定模拟场景中的两轮优化。想看它怎么一步步改进，可以翻翻 [研究记录](research/README.md)。
 
-## 已有验证
+## 想多了解一点
 
-2026-10-13 完成真实 MCP 鉴权、工具发现，以及门店 → 菜单 → 门店优惠 → 商品详情 → 整单计价的5次业务调用。全部返回，取得整数分报价；无大模型调用或账户写操作。公开摘要已移除账户、券、门店及 trace 标识：[live-verification.json](docs/live-verification.json)。
+- [安装与第一次使用](docs/GETTING_STARTED.md)
+- [Skill 的具体步骤](skills/mcd-meal-plan-output/SKILL.md)
+- [麦当劳 MCP 接入说明](MCP_INTEGRATION.md)
+- [研究版如何接上真实服务](docs/ADAPTATION.md)
+- [实验结果与原版 Skill](research/README.md)
 
-项目来自一次固定模拟场景的 Skill-only 优化。原研究版 C2 在 MiniMax 独立评估中为29/30，空 Skill 基线25/30（10题、每题3次）。当前入口已按真实 MCP 适配，原研究版两份文件完整保存在 [research/c2](research/c2/)，二者版本及成绩范围见 [研究记录](research/README.md)。这些分数属于原研究版；真实入口目前完成工具链路检查，尚无对应的端到端大模型成功率测量。
+餐品、价格、优惠和供应情况以官方实时结果为准。涉及营养或过敏原时，请确认官方提供的信息；尚未查到的内容会保留为未知。
 
-## 项目文件
+项目采用 [MIT License](LICENSE)，来源说明见 [NOTICE.md](NOTICE.md)。这是独立开发的参赛作品，官方声明见 [CONTEST_DECLARATION.md](CONTEST_DECLARATION.md)。
 
-- [Skill 正文](skills/mcd-meal-plan-output/SKILL.md)：约束收集、查询、计价、解释和交付步骤。
-- [MCP_INTEGRATION.md](MCP_INTEGRATION.md)：实际工具、调用流程与业务价值。
-- [docs/ADAPTATION.md](docs/ADAPTATION.md)：从固定研究场景到真实接口的适配说明。
-- [CONTEST_DECLARATION.md](CONTEST_DECLARATION.md)：官方原版参赛声明。
-
-项目为独立开发的竞赛作品。餐品、价格、库存与券的适用情况以官方接口实时结果为准；未标注的营养、过敏原或库存信息保持未知。查询成功不等于订单创建或库存锁定。
-
-代码与自编文档按 [MIT License](LICENSE)开放；原版参赛声明单独保留其官方来源。没有 WorkBuddy 开发记录，因此本项目不声明 WorkBuddy 专项资格。

@@ -1,4 +1,4 @@
-"""Write a private local MCP config; never print the credential-bearing contents."""
+"""生成本机专用的 MCP 配置，输出时隐藏包含凭据的内容。"""
 import json
 import os
 from pathlib import Path
@@ -14,7 +14,7 @@ def write_local_config(root):
     target = directory / 'mcp.json'
     data = {'mcpServers': {'mcd-mcp': {'type': 'streamablehttp', 'url': url,
                                     'headers': {'Authorization': 'Bearer ' + token}}}}
-    # Exclusive creation also rejects an existing file or symlink; no accidental overwrite.
+    # 仅新建文件，已有文件或符号链接都会被拒绝，避免覆盖原配置。
     fd = os.open(target, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
     with os.fdopen(fd, 'w') as stream:
         json.dump(data, stream, ensure_ascii=False, indent=2)

@@ -1,0 +1,28 @@
+{
+  "更新日期": "2026-10-13",
+  "基于提交": "02d5db4d35d7fe91d3a76b358af838e3f77475c4",
+  "更新内容": "简体中文润色、README 语气调整、安装说明整理与代码注释中文化",
+  "真实接口记录": "live-verification.json 保留首次公开提交对应的原始时间、结果和脚本哈希",
+  "脚本核对": {
+    "scripts/mcd_mcp.py": {
+      "before_sha256": "89808461e253d570238bb67ced4096c9821efdb1eaab21d9c163426c49247c4d",
+      "after_sha256": "3eba6cd9f663a489f5be4302f67525531506d5e87808f34aff2e5138dd4512eb",
+      "执行语句与常量保持一致": true,
+      "修改范围": "模块说明与代码注释；模块说明同时用于命令行帮助"
+    },
+    "scripts/read_only_demo.py": {
+      "before_sha256": "01a39329f802975baef7e1979dfdf5ca5243bf61e3bae31e4338a80037a03e4a",
+      "after_sha256": "074a9d1702fdf18c3e8ae2a5e77b26d0ed1ef705fa90d7fb9518555e5692d88f",
+      "执行语句与常量保持一致": true,
+      "修改范围": "模块说明与代码注释；模块说明同时用于命令行帮助"
+    },
+    "scripts/render_mcp_config.py": {
+      "before_sha256": "46972b621b902d3fb7c7929983ab17b985e4f54ec7cd8db70b1604fc15b69f70",
+      "after_sha256": "d60fa7b37d0061052c3e549c7edadb8c66abf9a9baaff466c476b171c8090c3b",
+      "执行语句与常量保持一致": true,
+      "修改范围": "模块说明与代码注释；模块说明同时用于命令行帮助"
+    }
+  },
+  "新增真实业务调用": 0,
+  "新增Actor评测": 0
+}

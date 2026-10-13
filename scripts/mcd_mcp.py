@@ -1,4 +1,4 @@
-"""Read-only command-line client for the official McDonald's China MCP server."""
+"""麦当劳中国官方 MCP 的只读命令行客户端。"""
 from __future__ import annotations
 import argparse
 import asyncio
@@ -31,7 +31,7 @@ def connection_settings():
 @asynccontextmanager
 async def connect():
     url, token = connection_settings()
-    # A direct connection avoids inheriting an unrelated local proxy or sending credentials to it.
+    # 直接连接官方服务，避免沿用本机其他代理设置或将凭据发往代理。
     factory = lambda **kw: httpx.AsyncClient(**kw, trust_env=False, follow_redirects=True)
     async with streamablehttp_client(url, headers={'Authorization': 'Bearer ' + token},
                                     timeout=30, sse_read_timeout=60,
@@ -65,7 +65,7 @@ def business_payload(result):
     raise ValueError('Response has no structured JSON payload; inspect it locally with the CLI')
 
 async def run(args):
-    # Validate the operation before opening an authenticated connection.
+    # 先检查操作和参数，再建立需要凭据的连接。
     if args.command == 'call':
         if args.tool not in READ_ONLY_TOOLS:
             raise ValueError('Tool is outside the read-only allowlist')
@@ -100,7 +100,7 @@ def main():
     try:
         asyncio.run(run(args))
     except Exception as error:
-        # SDK exceptions may contain transport metadata; do not echo them or credentials.
+        # SDK 异常可能包含连接信息，输出时仅保留错误类型。
         print(f'MCP operation failed ({type(error).__name__}). Check the token, connection and tool arguments locally.', file=sys.stderr)
         return 1
     return 0

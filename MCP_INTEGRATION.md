@@ -1,23 +1,35 @@
 # 麦当劳 MCP 接入说明
 
-实际使用官方远程服务 `https://mcp.mcd.cn`，通过 Streamable HTTP 连接，Token 仅从用户运行环境注入。官方指南：[M-China/mcd-mcp-server](https://github.com/M-China/mcd-mcp-server)。
+项目连接麦当劳官方服务 `https://mcp.mcd.cn`，使用 Streamable HTTP。客户端从运行环境读取个人 Token，并通过 `Authorization` 请求头完成鉴权。
 
-## 调用流程与价值
+配置步骤见 [安装与第一次使用](docs/GETTING_STARTED.md)，服务说明见 [官方接入指南](https://github.com/M-China/mcd-mcp-server)。
 
-1. `query-nearby-stores`：使用用户明确的城市、位置和取餐渠道选择真实门店。
-2. `query-meals` / `query-meal-detail`：读取当前菜单、编码、套餐组成和选配，供模型结合预算与人数规划。
-3. `query-store-coupons`：核验门店/渠道可用优惠。`query-my-coupons` 仅在需要查看用户资产或指定券时使用，不能用它替代适用性检查。
-4. `calculate-price`：对候选整单核验实际金额，避免参考价、优惠叠加或元/分换算造成错误。
-5. Skill 汇总方案、约束和调用依据；有真实traceId时保留它与对应结论的联系。
+## 从一句需求到一份方案
 
-应用保留从研究版迁移出的状态判断、硬性要求与偏好区分、证据关联和输出自检。真实接口可能没有某些合成属性或固定错误码，无法确认的内容保持未知。所有业务标识从工具返回提取。
+1. **选门店。** `query-nearby-stores` 根据用户提供的位置和取餐方式查找门店。
+2. **看菜单。** `query-meals` 返回当前门店的餐品和参考价格，`query-meal-detail` 提供套餐组成和选配信息。
+3. **查优惠。** `query-store-coupons` 核对当前门店和渠道适用的券。用户需要查看自己的券时，再使用 `query-my-coupons`；实际使用仍须核对门店适用情况。
+4. **算整单。** `calculate-price` 核对商品、数量、优惠和配置对应的实际金额。
+5. **讲清楚。** Skill 整理方案、逐项检查用户要求，并把结论对应到实际查询结果；服务返回 `traceId` 时一并保留。
 
-## 可独立运行的入口
+这样，用户可以看清这顿饭买什么、花多少钱、哪些要求已经满足，以及哪些信息还需要确认。门店、商品、业务和券的编码均来自本次工具返回。库存、营养等信息缺失时保留为未知，后续按实际返回继续判断。
 
-`scripts/mcd_mcp.py` 使用官方 MCP Python SDK，支持工具发现与六项查询/计价工具，传输层拒绝其他工具；端点限制为官方域名。`scripts/read_only_demo.py` 依次验证门店、菜单、门店券、单品详情和报价，不调用大模型、不下单、不改变账户。正常 Skill 执行由用户选择的 AI 客户端完成。
+## 两种使用方式
 
-2026-10-13 的真实验证已成功，公开证据：[docs/live-verification.json](docs/live-verification.json)。该摘要只披露工具名、成功和报价类型，未发布响应原文、账户信息、券ID、门店/trace标识或凭据。此次验证是实时接口链路检查，不代表完整自然语言配餐的成功率。
+日常配餐由用户选择的 AI 客户端执行 Skill。客户端需要先连接官方 MCP。
 
-## 配置
+命令行工具 `scripts/mcd_mcp.py` 使用 MCP Python SDK，支持查看工具说明，以及调用六个查询和计价工具。脚本只连接官方域名，并拒绝调用允许列表之外的工具。
 
-`mcp-config.example.json` 只含环境变量占位符。支持变量展开的客户端可直接引用；其他客户端使用本机生成的 `.local/mcp.json`。凭据文件不进入版本控制。仓库未使用真实账户数据作为测试夹具。
+`scripts/read_only_demo.py` 用五步查询检查真实连接：门店、菜单、门店优惠、单品详情、整单报价。演示选取无需选配的单品，不调用大模型，也不创建订单或修改账户。
+
+## 已完成的检查
+
+2026-10-13 的真实接口检查已成功取得报价，见 [验证记录](docs/live-verification.json)。公开记录保留工具名、调用结果和报价类型，个人账户、券、门店与 trace 标识经过脱敏。
+
+这份记录覆盖接口调用。提交版的完整自然语言配餐表现，仍待独立的模型评测。研究版的实验结果见 [研究记录](research/README.md)。
+
+## 配置和数据保存
+
+[mcp-config.example.json](mcp-config.example.json)使用环境变量占位符。需要完整本机配置时，可生成 `.local/mcp.json`；该目录已加入 Git 忽略列表。
+
+本地测试使用虚构响应。用户的真实查询结果只用于当前点餐请求，公开演示使用脱敏摘要。

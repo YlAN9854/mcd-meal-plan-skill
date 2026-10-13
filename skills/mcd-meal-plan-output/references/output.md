@@ -1,18 +1,22 @@
-# 可选结构化输出
+# 需要 `plan.json` 时怎么写
 
-普通使用先给可读方案。需要 `plan.json` 时使用以下字段；本格式属于提交版应用输出，不是麦当劳官方接口，也不是原研究版评分契约。
+日常使用先给用户可读方案。用户需要 `plan.json` 时，按下表整理；这是提交版的应用输出格式。
 
-| 字段 | 内容 |
+| 字段 | 填写内容 |
 | --- | --- |
-| status | ready / needs_clarification / infeasible / service_unavailable / incomplete |
-| store_code | 实际门店编码；未确定时null |
-| be_type | 自取1、得来速5；未确定时null |
-| items | 可行方案的商品、数量、已核实优惠与配置；其他结果为[] |
-| total_cents | 可行方案的整单实时报价，整数分；其他结果null |
-| minimum_total_cents | 仅已证明预算无解时填可证实的最低整单报价；其余null |
-| missing_fields | 必要的未确定信息名称；没有则[] |
-| reason_codes | 本次状态/事件的简短机器可读标签，必须有对应事实 |
-| evidence_refs | 对象列表，含tool、server_trace_id（无则null）、source_locator（客户端可定位结果，无则null）、supports；不伪造标识 |
-| message | 给用户的简明结果、证据范围和未解决事项 |
+| `status` | `ready` / `needs_clarification` / `infeasible` / `service_unavailable` / `incomplete` |
+| `store_code` | 实际门店编码，未确定时为 `null` |
+| `be_type` | 到店自取为 `1`，得来速为 `5`，未确定时为 `null` |
+| `items` | 可行方案的商品、数量、已核实优惠和配置；其他结果为 `[]` |
+| `total_cents` | 可行方案的整单实时报价，单位为整数分；其他结果为 `null` |
+| `minimum_total_cents` | 仅在已证明预算无解时，填写有依据的最低整单报价；其余为 `null` |
+| `missing_fields` | 尚未确定的必要信息名称；没有则填 `[]` |
+| `reason_codes` | 状态和实际事件的简短标签，每项都应有对应事实 |
+| `evidence_refs` | 依据列表，每项包含 `tool`、`server_trace_id`、`source_locator` 和 `supports` |
+| `message` | 给用户的简明结果、已检查范围和未解决事项 |
 
-金额一律为整数分，未知金额不填0。未完成搜索时用incomplete，不能仅因当前几个方案超预算就填infeasible或最低价。工具返回了报价也不代表已经下单。需要澄清时直接列问题，无需先造一套商品方案。
+`evidence_refs` 中的 `server_trace_id` 填服务实际返回的 trace；没有则为 `null`。`source_locator` 填客户端可定位的本次调用结果；没有则为 `null`。`supports` 说明这条查询支持哪个结论。所有引用均须真实。
+
+金额使用整数分，未知金额保持 `null`。搜索尚未完成时使用 `incomplete`，说明已经查过的组合和待查内容；无解和最低价的结论需要充分依据。
+
+需要澄清时直接列出问题，商品清单保持为空。查询和报价完成后，任务结束于方案输出，实际点餐仍由用户在官方渠道完成。
