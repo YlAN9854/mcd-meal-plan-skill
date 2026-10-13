@@ -1,0 +1,27 @@
+{
+  "files": {
+    ".env.example": "b220b724f17bfd1cef0f793f8572aee198306c6ac90f40f68476e2eb2e8e7a53",
+    ".gitignore": "f4a329ad54ce3ae236a2c6e765571616bb0022e8ab0d912db8db119668842e88",
+    "CONTEST_DECLARATION.md": "cd28101bcb29cc8fb24b372fe91ce6b42c4a1487a54e01f7ade0c8c6a84241b7",
+    "LICENSE": "556660c24632911b7a0feb13c81ecc0efcc4badc89cf79a530de5c13c6f937ff",
+    "MCP_INTEGRATION.md": "3af5dc6f818e49e70282b1d6edd4bb299ccca3f9c9c5d8528f46d079ea012f04",
+    "NOTICE.md": "e4dce8732abcce4861da6e955c3a6ea5fe48f3b60f28fc4c706877954db7c7f9",
+    "README.md": "e5e9e97592b2ed20ad67da3d7180c320b338237946fe5219abd55db206774b00",
+    "docs/ADAPTATION.md": "fb039a180e20ec739073d039e2144951ba08c5c8027fe76281d67789763975a4",
+    "docs/live-verification.json": "73bfa127a3546db2164e93bc6b90bf47ee20e2a815c56cdd20e8f61e5cb4144b",
+    "docs/official-source.json": "9d8f0c155ee71cfddafba4957ff0bd5bd3e40504758a93cb6abc9dce5e361170",
+    "mcp-config.example.json": "4766e45a9b799f8ea943f2c71a344806f2e5e3bfd269d959d0ae2539b06b2687",
+    "requirements.txt": "559dc198bf9693c8de00f287f800379b22abd587056d6420ef655f1863e9290a",
+    "research/README.md": "51530f3dec5f0057d1e5dc04d2307231459a02452df92c51a2a62e790b194be3",
+    "research/c2/SKILL.md": "49e7664bf47974908821b26f6ff066f0207f031599497bfcd4d19015ce217ece",
+    "research/c2/references/mcp-tools.md": "af7a4d6bec065c91165217a9e1de812178b0dd17d2cfdf5441b581f50a160a48",
+    "scripts/mcd_mcp.py": "89808461e253d570238bb67ced4096c9821efdb1eaab21d9c163426c49247c4d",
+    "scripts/read_only_demo.py": "01a39329f802975baef7e1979dfdf5ca5243bf61e3bae31e4338a80037a03e4a",
+    "scripts/render_mcp_config.py": "46972b621b902d3fb7c7929983ab17b985e4f54ec7cd8db70b1604fc15b69f70",
+    "skills/mcd-meal-plan-output/SKILL.md": "d17cb6be6941c3b570eb278800b161062409f7024609805861743641b5ce9113",
+    "skills/mcd-meal-plan-output/references/mcp-tools.md": "a86e957ba6475da71492b09b842b47f349513bb10634450024b7df517b47bc86",
+    "skills/mcd-meal-plan-output/references/output.md": "d38bbc3b9f1f09c9c7c6231e41c394c13300eb795fad6c86ddaa1236b42e776c",
+    "tests/test_client.py": "83dab16d0bc15c3366ddbf57a0ef2d97f971cc806a510236c49955e95bae1a77"
+  },
+  "scope": "Public release files only; this manifest excludes itself, .git and all local credentials."
+}

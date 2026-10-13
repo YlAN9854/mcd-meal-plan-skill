@@ -1,0 +1,50 @@
+{
+  "tested_utc": "2026-10-12T23:58:45.703621+00:00",
+  "endpoint": "https://mcp.mcd.cn",
+  "kind": "real_mcp_read_only_transport_smoke",
+  "client_sha256": "89808461e253d570238bb67ced4096c9821efdb1eaab21d9c163426c49247c4d",
+  "demo_sha256": "01a39329f802975baef7e1979dfdf5ca5243bf61e3bae31e4338a80037a03e4a",
+  "discovered_tool_count": 35,
+  "permitted_tools_present": [
+    "calculate-price",
+    "query-meal-detail",
+    "query-meals",
+    "query-my-coupons",
+    "query-nearby-stores",
+    "query-store-coupons"
+  ],
+  "calls": [
+    {
+      "tool": "query-nearby-stores",
+      "tool_error": false,
+      "has_server_trace_id": true
+    },
+    {
+      "tool": "query-meals",
+      "tool_error": false,
+      "has_server_trace_id": true
+    },
+    {
+      "tool": "query-store-coupons",
+      "tool_error": false,
+      "has_server_trace_id": true
+    },
+    {
+      "tool": "query-meal-detail",
+      "tool_error": false,
+      "has_server_trace_id": true
+    },
+    {
+      "tool": "calculate-price",
+      "tool_error": false,
+      "has_server_trace_id": true
+    }
+  ],
+  "business_tool_calls": 5,
+  "quote_received": true,
+  "quote_amount_type": "integer_cents",
+  "actor_model_calls": 0,
+  "account_mutation_calls": 0,
+  "personal_data_published": false,
+  "scope": "Actual authenticated read-only tool calls, not an LLM end-to-end Skill evaluation. No store/coupon/account/trace identifiers or raw responses included."
+}

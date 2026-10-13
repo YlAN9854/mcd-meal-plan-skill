@@ -1,0 +1,18 @@
+{
+  "repository": "M-China/mcd-developer-innovation-challenge",
+  "commit": "44f2c67f1cbdd25b48b369f706ee25de80e7a12e",
+  "files": {
+    "README.md": {
+      "sha256": "1ea2821dcd64210ab4f5d4545a5fc183e5ddbd9d0194f7e704f37b9ff477623a",
+      "url": "https://raw.githubusercontent.com/M-China/mcd-developer-innovation-challenge/44f2c67f1cbdd25b48b369f706ee25de80e7a12e/README.md"
+    },
+    "activityGuidelines.md": {
+      "sha256": "bfb8647e133a0ad16eb7e76219a3718222d2c9809913251659f7d4f2d7271c15",
+      "url": "https://raw.githubusercontent.com/M-China/mcd-developer-innovation-challenge/44f2c67f1cbdd25b48b369f706ee25de80e7a12e/activityGuidelines.md"
+    },
+    "CONTEST_DECLARATION.md": {
+      "sha256": "cd28101bcb29cc8fb24b372fe91ce6b42c4a1487a54e01f7ade0c8c6a84241b7",
+      "url": "https://raw.githubusercontent.com/M-China/mcd-developer-innovation-challenge/44f2c67f1cbdd25b48b369f706ee25de80e7a12e/CONTEST_DECLARATION.md"
+    }
+  }
+}
