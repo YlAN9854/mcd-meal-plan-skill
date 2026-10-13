@@ -66,4 +66,3 @@
 餐品、价格、优惠和供应情况以官方实时结果为准。涉及营养或过敏原时，请确认官方提供的信息；尚未查到的内容会保留为未知。
 
 项目采用 [MIT License](LICENSE)，来源说明见 [NOTICE.md](NOTICE.md)。这是独立开发的参赛作品，官方声明见 [CONTEST_DECLARATION.md](CONTEST_DECLARATION.md)。
-
